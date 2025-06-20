@@ -10,14 +10,14 @@ const uint8_t *FONT = Arial14; // Use Arial14 for larger text
 SoftDMD dmd(WIDTH, 1);  // DMD controls the entire display
 DMD_TextBox box(dmd, 0, 0, WIDTH * 32, 16); // Text box for automatic scrolling
 
-SoftwareSerial pmsSerial(3, 4); // RX = pin 3, TX = pin 4 for PMS7003
+SoftwareSerial pmsSerial(2, 3); // RX = pin 3, TX = pin 4 for PMS7003
 
 unsigned long lastReadTime = 0;
 const unsigned long readInterval = 10000; // Read PM sensor every 10 seconds
 unsigned long lastDebugTime = 0; // For loop debugging
 unsigned long lastScrollTime = 0; // For controlling scroll speed
-const unsigned long scrollInterval = 500; // 100ms for slower scrolling
-String currentMsg = "PM2.5: N/A ug/m3";
+const unsigned long scrollInterval = 0; // 100ms for slower scrolling
+String currentMsg = "PM2.5: N/A";
 bool displayInitialized = false; // Flag to control P10 display activation
 bool messageUpdated = false; // Flag to track if the message needs to be rewritten
 
@@ -31,8 +31,8 @@ void setup() {
   pmsSerial.write(activeModeCmd, sizeof(activeModeCmd));
   delay(100);
 
-  Serial.println("Waiting 30s for PMS7003 to stabilize...");
-  delay(30000);
+  Serial.println("Waiting 10s for PMS7003 to stabilize...");
+  delay(10000);
 
   // Initial buffer flush to clear any garbage data
   Serial.println("Initial buffer flush for 5 seconds...");
